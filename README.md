@@ -11,10 +11,17 @@ I am using the following tools for this:
 - Ruby v2.7.2
 - Bundle
 - Rspec
+- Standardrb
 
 ### Running the tests
 
 ```
 $ bundle install
 $ bundle exec rspec
+```
+
+# Prettying up the code
+
+```
+$ bundle exec standardrb --fix
 ```
