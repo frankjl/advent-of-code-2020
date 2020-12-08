@@ -876,7 +876,7 @@ FBFFBFFLLL')
 
       candidates = layout.find_empty
 
-      puts "candidates: #{candidates}"
+      expect(candidates.first).to eq 623
     end
   end
 end

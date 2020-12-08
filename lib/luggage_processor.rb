@@ -19,7 +19,7 @@ class LuggageProcessor
   def sum(item)
     @rules[item.to_sym][:links].reduce(0) do |sum, link|
       sum += link[:count] * sum(link[:destination]) if link[:count] > 0
-      sum += link[:count]
+      sum + link[:count]
     end
   end
 
@@ -28,7 +28,7 @@ class LuggageProcessor
       @rules[key][:links].any? { |link| link[:count] > 0 && [item.to_s, "other"].include?(link[:destination]) }
     }
 
-    sources.each do |key, value|
+    sources.keys.each do |key|
       unless list.include?(key)
         list << key
         parents(key, list)
