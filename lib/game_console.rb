@@ -21,31 +21,14 @@ class GameConsole
 
   def detect_bad_instruction
     index = 0
-    possibly_bad_instruction = nil
-    
     until execute_safely
       clear
-      if !possibly_bad_instruction.nil?
-        @instructions[index] = possibly_bad_instruction
-      end
-
+      # Revert the last switched instruction (if applicable)
+      switch(index - 1) if index >= 0
+      
+      # Switch the next instruction
+      switch(index)
       index += 1
-      # Find the next possibly_bad_instruction
-      relative_index = @instructions[index..-1].find_index { |item|
-        (instruction, value) = item.strip.split(/\s/)
-        instruction == "jmp" || (instruction == "nop" && value.to_i > 0)
-      }
-      index += relative_index
-      possibly_bad_instruction = @instructions[index]
-
-      # Change it!
-      if /jmp/.match(possibly_bad_instruction)
-        new_instruction = possibly_bad_instruction.gsub(/jmp/, "nop")
-        @instructions[index] = new_instruction
-      elsif /nop/.match(possibly_bad_instruction)
-        new_instruction = possibly_bad_instruction.gsub(/nop/, "jmp")
-        @instructions[index] = new_instruction
-      end
     end
   end
 
@@ -55,9 +38,9 @@ class GameConsole
     instruction = @instructions[index]
     # Change it!
     if /jmp/.match(instruction)
-      @instructions[index] = instruction.gsub(/jmp/, "nop")
-    elsif /nop/.match(possibly_bad_instruction)
-      @instructions[index] = instruction.gsub(/nop/, "jmp")
+      @instructions[index] = instruction.gsub("jmp", "nop")
+    elsif /nop/.match(instruction)
+      @instructions[index] = instruction.gsub("nop", "jmp")
     end
   end
 
