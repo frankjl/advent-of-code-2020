@@ -25,7 +25,7 @@ class GameConsole
       clear
       # Revert the last switched instruction (if applicable)
       switch(index - 1) if index >= 0
-      
+
       # Switch the next instruction
       switch(index)
       index += 1
@@ -37,9 +37,9 @@ class GameConsole
   def switch(index)
     instruction = @instructions[index]
     # Change it!
-    if /jmp/.match(instruction)
+    if /jmp/.match?(instruction)
       @instructions[index] = instruction.gsub("jmp", "nop")
-    elsif /nop/.match(instruction)
+    elsif /nop/.match?(instruction)
       @instructions[index] = instruction.gsub("nop", "jmp")
     end
   end
