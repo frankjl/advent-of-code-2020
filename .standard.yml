@@ -1,3 +1,3 @@
 ignore:                 # default: []
   - 'spec/game_console_spec.rb':
-      - Lint/Debugger
+    - Lint/Debugger
